@@ -15,12 +15,6 @@ const getVersion = async (version: string): Promise<Version> => {
 
 async function run() {
     try {
-        const refType = github.context.payload.ref_type;
-        if (refType !== "branch"){
-            core.setFailed("This action is only meant to be run on the creation of a new branch");
-            return;
-        }
-
         // Grab the branch version
         const branchName: string = github.context.payload.ref;
         const regex = new RegExp(/^(release|prerelease)\/\d{1,2}\.\d{1,2}$/);
