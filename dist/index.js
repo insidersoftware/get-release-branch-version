@@ -82,9 +82,9 @@ function run() {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
                     branchName = github.context.payload.ref;
-                    regex = new RegExp(/^(release|prerelease)\/\d{1,2}\.\d{1,2}$/);
+                    regex = new RegExp(/^(refs\/heads\/)?(release|prerelease)\/\d{1,2}\.\d{1,2}$/);
                     if (!branchName.match(regex)) return [3 /*break*/, 2];
-                    versionString = branchName.split('/')[1];
+                    versionString = branchName.split('/').pop();
                     return [4 /*yield*/, getVersion(versionString)];
                 case 1:
                     version = _a.sent();

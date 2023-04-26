@@ -17,9 +17,9 @@ async function run() {
     try {
         // Grab the branch version
         const branchName: string = github.context.payload.ref;
-        const regex = new RegExp(/^(release|prerelease)\/\d{1,2}\.\d{1,2}$/);
+        const regex = new RegExp(/^(refs\/heads\/)?(release|prerelease)\/\d{1,2}\.\d{1,2}$/);
         if (branchName.match(regex)){
-            const versionString = branchName.split('/')[1];
+            const versionString = branchName.split('/').pop();
             const version = await getVersion(versionString);
             console.log("version: ", version);
             core.setOutput("major", version.major);
