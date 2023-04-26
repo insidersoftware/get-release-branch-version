@@ -7,11 +7,9 @@ const getVersion = async (version: string): Promise<Version> => {
     return {
         major: parseInt(numbers[0]),
         minor: parseInt(numbers[1]),
-        patch: parseInt(numbers[2]),
         manifestSafeVersionString:
             numbers[0].padStart(2, "0") + "." +
-            numbers[1].padStart(2, "0") + "." +
-            numbers[2].padStart(2, "0")
+            numbers[1].padStart(2, "0")
     };
 }
 
@@ -25,18 +23,17 @@ async function run() {
 
         // Grab the branch version
         const branchName: string = github.context.payload.ref;
-        const regex = new RegExp(/^(release|prerelease)\/\d{1,2}\.\d{1,2}\.\d{1,2}$/);
+        const regex = new RegExp(/^(release|prerelease)\/\d{1,2}\.\d{1,2}$/);
         if (branchName.match(regex)){
             const versionString = branchName.split('/')[1];
             const version = await getVersion(versionString);
             console.log("version: ", version);
             core.setOutput("major", version.major);
             core.setOutput("minor", version.minor);
-            core.setOutput("patch", version.patch);
             core.setOutput("manifestSafeVersionString", version.manifestSafeVersionString);
         }
         else{
-            core.setFailed("the branch name does not match the patter '(pre)release/nn.nn.nn'");
+            core.setFailed("the branch name does not match the patter '(pre)release/nn.nn'");
         }
     } catch (error) {
         core.setFailed(error);
@@ -48,7 +45,6 @@ run();
 interface Version {
     major: number,
     minor: number,
-    patch: number,
     manifestSafeVersionString: string
 }
 
