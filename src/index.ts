@@ -17,11 +17,6 @@ const getVersion = async (version: string): Promise<Version> => {
 
 async function run() {
     try {
-        const event = github.context.eventName;
-        if (event !== "create"){
-            core.setFailed("This action is only meant to be run on create");
-            return;
-        }
         const refType = github.context.payload.ref_type;
         if (refType !== "branch"){
             core.setFailed("This action is only meant to be run on the creation of a new branch");
@@ -30,7 +25,7 @@ async function run() {
 
         // Grab the branch version
         const branchName: string = github.context.payload.ref;
-        const regex = new RegExp(/^release\/\d{1,2}\.\d{1,2}\.\d{1,2}$/);
+        const regex = new RegExp(/^(release|prerelease)\/\d{1,2}\.\d{1,2}\.\d{1,2}$/);
         if (branchName.match(regex)){
             const versionString = branchName.split('/')[1];
             const version = await getVersion(versionString);
@@ -41,7 +36,7 @@ async function run() {
             core.setOutput("manifestSafeVersionString", version.manifestSafeVersionString);
         }
         else{
-            core.setFailed("the branch name does not match the patter 'release/nn.nn.nn'");
+            core.setFailed("the branch name does not match the patter '(pre)release/nn.nn.nn'");
         }
     } catch (error) {
         core.setFailed(error);
