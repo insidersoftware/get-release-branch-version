@@ -27,7 +27,7 @@ async function run() {
             core.setOutput("manifestSafeVersionString", version.manifestSafeVersionString);
         }
         else{
-            core.setFailed("the branch name does not match the patter '(pre)release/nn.nn'");
+            core.setFailed("the branch name '" + branchName + "' does not match the patter '(pre)release/nn.nn'");
         }
     } catch (error) {
         core.setFailed(error);

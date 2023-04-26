@@ -94,7 +94,7 @@ function run() {
                     core.setOutput("manifestSafeVersionString", version.manifestSafeVersionString);
                     return [3 /*break*/, 3];
                 case 2:
-                    core.setFailed("the branch name does not match the patter '(pre)release/nn.nn'");
+                    core.setFailed("the branch name '" + branchName + "' does not match the patter '(pre)release/nn.nn'");
                     _a.label = 3;
                 case 3: return [3 /*break*/, 5];
                 case 4:
