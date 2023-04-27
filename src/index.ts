@@ -22,9 +22,8 @@ async function run() {
             const versionString = branchName.split('/').pop();
             const version = await getVersion(versionString);
             console.log("version: ", version);
-            core.setOutput("major", version.major);
-            core.setOutput("minor", version.minor);
-            core.setOutput("manifestSafeVersionString", version.manifestSafeVersionString);
+            core.exportVariable("branchVersionMajor", version.major);
+            core.exportVariable("branchVersionMinor", version.minor);
         }
         else{
             core.setFailed("the branch name '" + branchName + "' does not match the patter '(pre)release/nn.nn'");

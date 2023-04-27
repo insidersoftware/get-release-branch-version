@@ -89,9 +89,8 @@ function run() {
                 case 1:
                     version = _a.sent();
                     console.log("version: ", version);
-                    core.setOutput("major", version.major);
-                    core.setOutput("minor", version.minor);
-                    core.setOutput("manifestSafeVersionString", version.manifestSafeVersionString);
+                    core.exportVariable("branchVersionMajor", version.major);
+                    core.exportVariable("branchVersionMinor", version.minor);
                     return [3 /*break*/, 3];
                 case 2:
                     core.setFailed("the branch name '" + branchName + "' does not match the patter '(pre)release/nn.nn'");
